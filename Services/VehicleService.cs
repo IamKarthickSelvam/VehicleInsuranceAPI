@@ -170,6 +170,29 @@ namespace API.Services
             };
         }
 
+        public async Task<ActionResult> Delete(string vehicleModel)
+        {
+            var result = await GetVehicle(vehicleModel);
+
+            if (result == null)
+                throw new Exception("Vehicle does not exist");
+
+            _context.Entry(result).State = EntityState.Detached;
+
+            var vehicle = new VehicleData
+            {
+                Id = result.Id,
+                Model = result.Model,
+                Type = result.Type,
+                Price = result.Price,
+            };
+
+            _context.Vehicles.Remove(vehicle);
+            await _context.SaveChangesAsync();
+
+            return null;
+        }
+
         private async Task<bool> VehicleExists(string model)
         {
             return await _context.Vehicles.AnyAsync(x => x.Model == model);

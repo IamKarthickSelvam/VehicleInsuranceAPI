@@ -1,5 +1,6 @@
 ﻿using API.Data;
 using API.DTOs;
+using API.Entities;
 using API.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
@@ -60,21 +61,6 @@ namespace API.Controllers
             }
         }
 
-        //[HttpPost("generate")]
-        //public ActionResult Generate([FromBody] VehicleDto vehicleDto)
-        //{
-        //    try
-        //    {
-        //        //byte[] invoiceBytes = _vehicleService.GenerateDoc(vehicleDto);
-        //        //return File(invoiceBytes, "application/blob", "Invoice.docx");
-        //        return BadRequest("Error in generating file:");
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        return BadRequest("Error in generating file: " + ex.Message);
-        //    }
-        //}
-
         [HttpPost("Add")]
         public async Task<ActionResult<VehicleDBDto>> Add(VehicleDBDto addVDto)
         {
@@ -103,24 +89,18 @@ namespace API.Controllers
             }
         }
 
-        //FIGURE OUT DELETE ASAP
-        //[HttpDelete]
-        //public async Task<ActionResult> Delete(VehicleDBDto vehicleDBDto)
-        //{
-        //    if (!await VehicleExists(vehicleDBDto.Model))
-        //        return BadRequest("Vehicle does not exist");
-
-        //    var vehicle = new VehicleData
-        //    {
-        //        Model = vehicleDBDto.Model,
-        //        Type = vehicleDBDto.Type,
-        //        Price = vehicleDBDto.Price,
-        //    };
-
-        //    _context.Vehicles.Remove(vehicle);
-        //    await _context.SaveChangesAsync();
-
-        //    return StatusCode(200);
-        //}
+        [HttpDelete]
+        public async Task<ActionResult> Delete(string vehicleModel)
+        {
+            try
+            {
+                var result = await _vehicleService.Delete(vehicleModel);
+                return StatusCode(200);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
     }
 }
