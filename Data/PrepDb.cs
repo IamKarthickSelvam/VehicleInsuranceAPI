@@ -14,7 +14,11 @@ namespace API.Data
 
         private static void SeedData(DataContext context)
         {
-            context.Vehicles.AddRange(
+            if (!context.Vehicles.Any())
+            {
+                Console.WriteLine("Seeding Data");
+
+                context.Vehicles.AddRange(
                     new VehicleData() { Model = "Aprilia RSV4", Type = "Bike", Price = 2369000 },
                     new VehicleData() { Model = "BMW M1000RR", Type = "Bike", Price = 4898089 },
                     new VehicleData() { Model = "Ducati Panigale V4R", Type = "Bike", Price = 6999000 },
@@ -24,7 +28,12 @@ namespace API.Data
                     new VehicleData() { Model = "Yamaha R15 V4", Type = "Bike", Price = 225000 }
                 );
 
-            context.SaveChanges();
+                context.SaveChanges();
+            }
+            else
+            {
+                Console.WriteLine("Data already present!");
+            }
         }
     }
 }
