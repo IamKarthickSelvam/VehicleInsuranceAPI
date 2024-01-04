@@ -82,7 +82,7 @@ namespace API.Services
             multipliers.TypeM = vehicleDto.Type switch
             {
                 "Bike" => 1,
-                "Cars" => 1.2f,
+                "Car" => 1.2f,
                 _ => throw new Exception("Vehicle Type not specified")
             };
             vehicleDto.Age = vehicleDto.RegYear == DateTime.Now.Year ? 0 : DateTime.Now.Year - vehicleDto.RegYear;
@@ -203,7 +203,7 @@ namespace API.Services
             return await _context.Vehicles.SingleOrDefaultAsync(x => x.Model == model);
         }
         
-        public async Task<ActionResult<IEnumerable<string>>> GetVehicleModels()
+        public async Task<List<string>> GetVehicleModels(string vehicleType)
         {
             var azureEnabled = await _featureManager.IsEnabledAsync("AzureEnabled");
             if (azureEnabled)
@@ -218,7 +218,7 @@ namespace API.Services
                 }
                 else
                 {
-                    vehicleList = await _context.Vehicles.Select(x => x.Model).ToListAsync();
+                    vehicleList = await _context.Vehicles.Where(x => x.Type == vehicleType).Select(x => x.Model).ToListAsync();
                     _cache.SetString("vehicleModelList", JsonConvert.SerializeObject(vehicleList));
                 }
 
@@ -226,7 +226,7 @@ namespace API.Services
             }
             else
             {
-                return await _context.Vehicles.Select(x => x.Model).ToListAsync();
+                return await _context.Vehicles.Where(x => x.Type == vehicleType).Select(x => x.Model).ToListAsync();
             }
         }
 

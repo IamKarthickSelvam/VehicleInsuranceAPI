@@ -10,7 +10,7 @@ namespace API.Interfaces
         Task<ActionResult<VehicleDto>> CalculatePremium(VehicleDto vehicleDto);
         Task<ActionResult<VehicleDBDto>> Add(VehicleDBDto addVDto);
         Task<ActionResult> Delete(string vehicleModel);
-        Task<ActionResult<IEnumerable<string>>> GetVehicleModels();
+        Task<List<string>> GetVehicleModels(string vehicleType);
         Task<byte[]> GeneratePdf(VehicleDto vehicleDto);
     }
 }

@@ -1,6 +1,5 @@
 ﻿using API.Data;
 using API.DTOs;
-using API.Entities;
 using API.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
@@ -34,12 +33,12 @@ namespace API.Controllers
             }
         }
 
-        [HttpGet]
-        public async Task<ActionResult<IEnumerable<string>>> GetBasicDetails()
+        [HttpGet("{vehicleType}")]
+        public async Task<ActionResult<IEnumerable<string>>> GetBasicDetails(string vehicleType)
         {
             try
             {
-                return await _vehicleService.GetVehicleModels();
+                return await _vehicleService.GetVehicleModels(vehicleType);
             }
             catch (Exception ex)
             {
