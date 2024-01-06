@@ -37,11 +37,11 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
-app.UseCors(builder => builder.AllowAnyMethod().AllowAnyHeader().WithOrigins("https://wonderful-wave-002693203.4.azurestaticapps.net/"));
+app.UseCors(builder => builder.AllowAnyMethod().AllowAnyHeader().WithOrigins("https://wonderful-wave-002693203.4.azurestaticapps.net"));
 
 app.Use(async (HttpContext, next) =>
 {
-    HttpContext.Response.Headers.Add("Access-Control-Allow-Origin", "*");
+    HttpContext.Response.Headers.Add("Access-Control-Allow-Origin", "https://wonderful-wave-002693203.4.azurestaticapps.net");
     await next();
 });
 
