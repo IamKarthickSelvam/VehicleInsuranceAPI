@@ -37,7 +37,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
-app.UseCors(builder => builder.AllowAnyMethod().AllowAnyHeader().WithOrigins("http://localhost:4200"));
+app.UseCors(builder => builder.AllowAnyMethod().AllowAnyHeader().WithOrigins("https://wonderful-wave-002693203.4.azurestaticapps.net/"));
 
 app.UseHttpsRedirection();
 
